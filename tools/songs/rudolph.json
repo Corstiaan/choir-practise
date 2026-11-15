@@ -1,0 +1,17 @@
+{
+  "id": "rudolph",
+  "order": 2,
+  "title": "Rudolph, the Red-Nosed Reindeer",
+  "subtitle": "SAB and piano",
+  "mscz": "rudolph.mscz",
+  "pdf": "rudolph.pdf",
+  "tempo": 125,
+  "swing": 0,
+  "marks": [9, 17, 25, 33, 43, 54, 62, 70, 79, 85],
+  "channels": [
+    {"id": "S", "name": "Soprano", "kind": "voice", "part": "Alto", "pick": "top"},
+    {"id": "A", "name": "Alto", "kind": "voice", "part": "Alto", "pick": "bottom"},
+    {"id": "B", "name": "Baritone", "kind": "voice", "part": "Tenor"},
+    {"id": "P", "name": "Piano", "kind": "piano", "part": "Piano"}
+  ]
+}

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Choir practice</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231c2a31'/%3E%3Crect x='13' y='4' width='6' height='24' rx='3' fill='%23ffc933'/%3E%3Cpath d='M5 11h22M5 16h22M5 21h22' stroke='%23eef3f5' stroke-width='1.5'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="app" id="app">
+
+  <header class="top">
+    <div class="song">
+      <h1 class="song-title" id="songTitle">Choir practice</h1>
+      <select class="song-select" id="songSelect" aria-label="Choose a song" hidden></select>
+      <p class="song-sub" id="songSub"></p>
+    </div>
+    <div class="voice-pick">
+      <span id="voiceLabel">I sing</span>
+      <div class="segmented" id="voiceButtons" role="radiogroup" aria-labelledby="voiceLabel"></div>
+    </div>
+  </header>
+
+  <main class="stage">
+    <section class="score" id="score" aria-label="Score" tabindex="-1">
+      <div class="sheet" id="sheet"></div>
+      <p class="notice" id="notice" hidden></p>
+    </section>
+
+    <aside class="desk" aria-label="Practice controls">
+      <section class="panel">
+        <h2>Mixer</h2>
+        <div class="mixer" id="mixer"></div>
+        <div class="presets" id="presets">
+          <button type="button" data-preset="all">Everyone</button>
+          <button type="button" data-preset="mine">My part louder</button>
+          <button type="button" data-preset="without">Without my part</button>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2><label for="tempo">Tempo</label></h2>
+        <div class="row">
+          <input type="range" id="tempo" min="40" max="130" step="1" value="100">
+          <output id="tempoOut" for="tempo">100%</output>
+        </div>
+        <button type="button" class="link" id="tempoReset">Back to written tempo</button>
+      </section>
+
+      <section class="panel">
+        <h2>Loop</h2>
+        <div class="row loop-row">
+          <label>From measure <input type="number" id="loopFrom" inputmode="numeric"></label>
+          <label>to <input type="number" id="loopTo" inputmode="numeric"></label>
+        </div>
+        <div class="row">
+          <button type="button" class="toggle" id="loopToggle" aria-pressed="false">Loop</button>
+          <button type="button" id="loopSystem">This line</button>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Sound</h2>
+        <label class="field">Voices sound like
+          <select id="sound">
+            <option value="ooh">Sung "ooh"</option>
+            <option value="aah">Sung "aah"</option>
+            <option value="piano">Piano</option>
+          </select>
+        </label>
+        <label class="check"><input type="checkbox" id="countIn"> Count in one measure first</label>
+        <label class="check"><input type="checkbox" id="click"> Metronome click</label>
+      </section>
+
+      <p class="hint">Space plays and pauses. The arrow keys step one measure. Click a measure in the score to jump there, or drag across the timeline to loop a passage.</p>
+    </aside>
+  </main>
+
+  <footer class="transport">
+    <div class="buttons">
+      <button type="button" class="icon" id="prev" aria-label="Previous measure" title="Previous measure">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h2.5v14H6zM19 5v14L9.5 12z"/></svg>
+      </button>
+      <button type="button" class="icon play" id="play" aria-label="Play" title="Play (Space)">
+        <svg viewBox="0 0 24 24" aria-hidden="true" class="i-play"><path d="M7 4.5v15l13-7.5z"/></svg>
+        <svg viewBox="0 0 24 24" aria-hidden="true" class="i-pause"><path d="M6.5 5h4v14h-4zM13.5 5h4v14h-4z"/></svg>
+      </button>
+      <button type="button" class="icon" id="stop" aria-label="Stop" title="Stop">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6h12v12H6z"/></svg>
+      </button>
+      <button type="button" class="icon" id="next" aria-label="Next measure" title="Next measure">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.5 5H18v14h-2.5zM5 5v14l9.5-7z"/></svg>
+      </button>
+    </div>
+    <div class="readout" aria-live="off">
+      <span class="measure">Measure <b id="measureNo">1</b></span>
+      <span class="clock"><span id="timeNow">0:00</span> of <span id="timeTotal">0:00</span></span>
+    </div>
+    <div class="timeline" id="timeline" aria-label="Timeline: click to jump, drag to loop">
+      <div class="tl-labels" id="tlLabels"></div>
+      <div class="tl-track" id="tlTrack">
+        <div class="tl-cells" id="tlCells"></div>
+        <div class="tl-loop" id="tlLoop" hidden></div>
+        <div class="tl-cursor" id="tlCursor"></div>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<script src="songs/index.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/app.js"></script>
+<script src="js/piano-samples.js" async></script>
+</body>
+</html>

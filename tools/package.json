@@ -1,0 +1,8 @@
+{
+  "name": "choir-trainer-tools",
+  "private": true,
+  "description": "Build pipeline for the choir practice site",
+  "dependencies": {
+    "webmscore": "1.2.1"
+  }
+}

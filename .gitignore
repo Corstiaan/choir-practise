@@ -1,0 +1,28 @@
+# Dependencies and build output
+node_modules/
+tools/build/
+__pycache__/
+*.pyc
+.venv/
+
+# Source scores (licensed material, large binaries): keep local
+tools/songs/*.mscz
+tools/songs/*.pdf
+
+# Hand-off archive from the first session
+choir-practice.zip
+
+# Secrets and local config
+.htaccess
+.htpasswd
+.env
+.env.*
+.claude/settings.local.json
+
+# OS / editor / Synology Drive
+Thumbs.db
+.DS_Store
+.vscode/
+*.tmp
+@eaDir/
+*_Conflict*
