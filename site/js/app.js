@@ -12,7 +12,7 @@
 
   // Highlighter colours, one per sung part, in score order.
   var VOICE_COLORS = ['#ff6fae', '#ffc933', '#3fc8f2', '#b79bff', '#7ddc8a'];
-  var OTHER_COLORS = { piano: '#cfd8dc', click: '#8fa3ad' };
+  var OTHER_COLORS = { piano: '#6b7399', click: '#9aa1bd' };
 
   var STORE_KEY = 'choirPractice.v1';
   var settings = { vol: {}, mute: {}, solo: {}, voice: {}, rate: {}, sound: 'ooh', countIn: true, click: false, song: null };
