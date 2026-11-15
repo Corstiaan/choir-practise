@@ -240,7 +240,8 @@
     song.systems.forEach(function (s) { maxW = Math.max(maxW, s.w); maxH = Math.max(maxH, s.h); });
     var cs = getComputedStyle(sheet);
     var padX = parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight);
-    var availW = score.clientWidth - padX - 2;
+    var ss = getComputedStyle(score);
+    var availW = score.clientWidth - parseFloat(ss.paddingLeft) - parseFloat(ss.paddingRight) - padX - 2;
     var availH = score.clientHeight;
     var width = Math.max(240, Math.min(availW, 0.82 * availH * maxW / maxH, 1500));
     sheet.style.width = (width + padX) + 'px';

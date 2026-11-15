@@ -15,7 +15,7 @@
   --rule: #3a515d;
   --ink: #eef3f5;
   --soft: #a3b6c0;
-  --paper: #f8fafb;
+  --paper: #ffffff;
   --me: #ffc933;        /* highlighter colour of the singer's own part */
 }
 
@@ -60,7 +60,7 @@ button { cursor: pointer; }
 .song-sub { margin: 0; color: var(--soft); font-size: 0.95rem; }
 
 .voice-pick { display: flex; align-items: center; gap: 10px; color: var(--soft); }
-.segmented { display: flex; gap: 6px; }
+.segmented { display: flex; flex-wrap: wrap; gap: 6px; }
 .segmented button {
   border: 1px solid var(--rule); background: transparent; color: var(--ink);
   padding: 6px 12px; border-radius: 999px; line-height: 1.2; min-height: 44px;
