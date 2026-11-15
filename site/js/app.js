@@ -516,6 +516,7 @@
     });
 
     wireTimeline();
+    wireHelp();
     var resizeTimer = 0;
     window.addEventListener('resize', function () { clearTimeout(resizeTimer); resizeTimer = setTimeout(layout, 80); });
     window.addEventListener('load', layout);
@@ -524,6 +525,67 @@
         navigator.wakeLock.request('screen').then(function (l) { wakeLock = l; }).catch(function () {});
       }
     });
+  }
+
+  // ----------------------------------------------------------------- help
+  /** [what it points at, side of the bubble, how far along the target (0 to 1), text] */
+  var TIPS = [
+    ['#voiceButtons', 'below', 0.5, 'Tap your part. The highlighter and the mixer then use your colour.'],
+    ['#score', 'mid', 0.5, 'The highlighter follows the music. Tap any measure to jump there.'],
+    ['#mixer', 'mid', 0.5,'Make a part louder or softer. M mutes it, S plays only that part.'],
+    ['.panel:nth-child(2) h2', 'right', 0.5, 'Slow the music down to learn a hard bit.'],
+    ['.panel:nth-child(3) h2', 'right', 0.5, 'Repeat a passage. "This line" repeats the line you are on.'],
+    ['.panel:nth-child(4) h2', 'right', 0.5, 'Choose how the voices sound. Add a count-in or a click.'],
+    ['#play', 'above', 0.5, 'Play and pause. The arrows step one measure.'],
+    ['#timeline', 'above', 0.78, 'The whole song. Tap to jump, drag to loop a passage.']
+  ];
+
+  function wireHelp() {
+    var btn = $('helpBtn'), layer = document.createElement('div');
+    layer.className = 'help';
+    layer.hidden = true;
+    TIPS.forEach(function (t) {
+      var b = document.createElement('p');
+      b.className = 'tip ' + (t[1] === 'mid' ? 'above' : t[1]);
+      b.textContent = t[3];
+      layer.appendChild(b);
+    });
+    document.body.appendChild(layer);
+
+    function place() {
+      if (layer.hidden) return;
+      var vw = document.documentElement.clientWidth, gap = 14;
+      TIPS.forEach(function (t, i) {
+        var el = document.querySelector(t[0]), b = layer.children[i], side = t[1];
+        var r = el.getBoundingClientRect();
+        var cx = r.left + r.width * t[2], cy = r.top + r.height / 2;
+        // only show a bubble when its target is really on screen and not covered
+        var hit = document.elementFromPoint(cx, cy);
+        if (!hit || !el.contains(hit)) { b.style.visibility = 'hidden'; return; }
+        var w = b.offsetWidth, h = b.offsetHeight, left, top;
+        if (side === 'right') { left = r.right + gap; top = r.top - 6; }
+        else {
+          left = cx - w / 2;
+          top = side === 'below' ? r.bottom + gap : (side === 'mid' ? cy : r.top) - h - gap;
+        }
+        left = Math.max(8, Math.min(left, vw - w - 8));
+        b.style.left = left + 'px';
+        b.style.top = top + 'px';
+        b.style.setProperty('--ax', Math.max(18, Math.min(cx - left, w - 18)) + 'px');
+        b.style.visibility = '';
+      });
+    }
+
+    function show(on) {
+      layer.hidden = !on;
+      btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+      place();
+    }
+    btn.addEventListener('click', function () { show(layer.hidden); });
+    document.addEventListener('keydown', function (ev) { if (ev.key === 'Escape') show(false); });
+    // capture: the score and the controls scroll inside their own boxes
+    window.addEventListener('scroll', place, true);
+    window.addEventListener('resize', place);
   }
 
   function start() {

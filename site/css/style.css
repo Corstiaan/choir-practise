@@ -104,7 +104,8 @@ button { cursor: pointer; }
 /* ----------------------------------------------------------------- desk */
 .desk { overflow-y: auto; min-height: 0; padding: 4px 20px 20px 4px; scrollbar-color: var(--ink) transparent; }
 .panel { padding: 16px 18px 18px; margin-bottom: 14px; background: var(--desk-2); border-radius: 20px; box-shadow: 0 5px 0 var(--edge); }
-.panel h2 { margin: 0 0 8px; font-size: 1.15rem; font-weight: 700; letter-spacing: -0.01em; }
+/* fit-content: the help arrows point at the end of the heading text */
+.panel h2 { margin: 0 0 8px; width: fit-content; font-size: 1.15rem; font-weight: 700; letter-spacing: -0.01em; }
 .row { display: flex; align-items: center; gap: 10px; }
 .row + .row { margin-top: 10px; }
 
@@ -161,6 +162,8 @@ input[type="range"]::-moz-range-thumb { width: 18px; height: 18px; border: 3px s
 .check { min-height: 44px; }
 .check input { width: 22px; height: 22px; accent-color: var(--ink); }
 .hint { margin: 4px 6px 0; font-size: 0.9rem; max-width: 34em; }
+.credits { margin-top: 14px; }
+.credits a { display: inline-block; padding: 12px 0; margin: -12px 0; color: inherit; font-weight: 700; text-underline-offset: 3px; }
 
 /* ------------------------------------------------------------ transport */
 .transport {
@@ -207,6 +210,26 @@ input[type="range"]::-moz-range-thumb { width: 18px; height: 18px; border: 3px s
   pointer-events: none;
 }
 .tl-cursor { position: absolute; top: -4px; bottom: -4px; width: 4px; margin-left: -2px; background: var(--ink); border-radius: 2px; pointer-events: none; }
+
+/* ----------------------------------------------------------------- help */
+.help-btn {
+  position: relative; z-index: 30; flex: none; margin-left: auto;
+  width: 44px; height: 44px; padding: 0; border: 2px solid transparent; border-radius: 50%;
+  background: #fff; color: var(--ink); font: italic 700 1.3rem/1 Georgia, serif;
+  box-shadow: 0 3px 0 var(--edge);
+}
+.help-btn[aria-pressed="true"] { background: var(--go); box-shadow: 0 3px 0 var(--go-edge); }
+/* taps pass through, so the app stays usable and scrollable while the help shows */
+.help { position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 20; background: rgba(15, 15, 65, 0.74); pointer-events: none; }
+.tip {
+  position: absolute; margin: 0; width: max-content; max-width: min(220px, 46vw);
+  padding: 8px 12px; border-radius: 14px; background: #fff; color: var(--ink);
+  font-weight: 700; font-size: 0.95rem; line-height: 1.3;
+}
+.tip::after { content: ""; position: absolute; border: 11px solid transparent; }
+.tip.below::after { bottom: 100%; left: var(--ax); margin-left: -11px; border-bottom-color: #fff; }
+.tip.above::after { top: 100%; left: var(--ax); margin-left: -11px; border-top-color: #fff; }
+.tip.right::after { right: 100%; top: 8px; border-right-color: #fff; }
 
 /* --------------------------------------------------------------- phones */
 @media (max-width: 860px) {
