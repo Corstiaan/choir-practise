@@ -76,6 +76,7 @@ button { cursor: pointer; }
 .stage { display: grid; grid-template-columns: minmax(0, 1fr) 336px; min-height: 0; }
 
 .score { position: relative; overflow-y: auto; min-height: 0; padding: 4px 20px 0; scrollbar-color: var(--ink) transparent; }
+.score:focus { outline: none; }
 .sheet {
   margin: 0 auto 60vh;
   padding: 10px 18px 14px;
