@@ -139,7 +139,8 @@
         (s.id !== 'click' ? '<button type="button" class="ms" data-k="solo" aria-pressed="false" title="Solo: hear only this">S</button>' : '');
       row.querySelector('.strip-name span').textContent = s.name;
       row.querySelector('[data-k=mute]').setAttribute('aria-label', 'Mute ' + s.name);
-      row.querySelector('[data-k=solo]').setAttribute('aria-label', 'Solo ' + s.name);
+      var soloLbl = row.querySelector('[data-k=solo]');
+      if (soloLbl) soloLbl.setAttribute('aria-label', 'Solo ' + s.name);
       var range = row.querySelector('input');
       range.value = volOf(s.id);
       range.addEventListener('input', function () {
