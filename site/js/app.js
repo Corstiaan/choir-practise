@@ -170,7 +170,8 @@
       row.querySelector('input').style.setProperty('--fill', v + '%');
       row.querySelector('output').textContent = v;
       row.querySelector('[data-k=mute]').setAttribute('aria-pressed', settings.mute[s.id] ? 'true' : 'false');
-      row.querySelector('[data-k=solo]').setAttribute('aria-pressed', settings.solo[s.id] ? 'true' : 'false');
+      var soloBtn = row.querySelector('[data-k=solo]');
+      if (soloBtn) soloBtn.setAttribute('aria-pressed', settings.solo[s.id] ? 'true' : 'false');
       row.classList.toggle('silent', !!silent);
       var trim = s.kind === 'piano' ? 0.9 : 1;
       engine.setLevelSafe(s.id, silent ? 0 : Math.pow(v / 100, 1.8) * trim);
