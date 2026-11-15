@@ -63,7 +63,7 @@ button { cursor: pointer; }
 .segmented { display: flex; gap: 6px; }
 .segmented button {
   border: 1px solid var(--rule); background: transparent; color: var(--ink);
-  padding: 6px 12px; border-radius: 999px; line-height: 1.2;
+  padding: 6px 12px; border-radius: 999px; line-height: 1.2; min-height: 44px;
 }
 .segmented button[aria-checked="true"] { background: var(--c); border-color: var(--c); color: #14202a; font-weight: 700; }
 
@@ -105,7 +105,7 @@ button { cursor: pointer; }
 .row + .row { margin-top: 10px; }
 
 .strip {
-  display: grid; grid-template-columns: 5.6em minmax(0, 1fr) 2.1em 30px 30px; align-items: center; gap: 8px;
+  display: grid; grid-template-columns: 5.6em minmax(0, 1fr) 2.1em 44px 44px; align-items: center; gap: 8px;
   padding: 3px 0;
 }
 .strip-name { display: flex; align-items: center; gap: 8px; min-width: 0; }
@@ -114,7 +114,7 @@ button { cursor: pointer; }
 .strip output { text-align: right; color: var(--soft); font-variant-numeric: tabular-nums; }
 .strip.silent input, .strip.silent .strip-name { opacity: 0.45; }
 .ms {
-  width: 30px; height: 30px; padding: 0; border-radius: 6px;
+  width: 44px; height: 44px; padding: 0; border-radius: 6px;
   border: 1px solid var(--rule); background: transparent; color: var(--soft); font-weight: 700; font-size: 0.85rem;
 }
 .ms[aria-pressed="true"] { color: #14202a; background: var(--ink); border-color: var(--ink); }

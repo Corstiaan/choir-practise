@@ -369,18 +369,18 @@
   Engine.prototype._pianoNote = function (dest, midi, vel, when, lead) {
     var ctx = this.ctx, gain = ctx.createGain(), sources = [];
     var level = (lead ? 2.4 : 2.0) * Math.pow(vel / 90, 1.4);
-    var sample = null, best = 99;
+    var sample = null, sampleMidi = 0, best = 99;
     if (this.piano) {
       for (var m in this.piano) {
         var dist = Math.abs(m - midi);
-        if (dist < best) { best = dist; sample = this.piano[m]; sample.midi = +m; }
+        if (dist < best) { best = dist; sample = this.piano[m]; sampleMidi = +m; }
       }
     }
     gain.connect(dest);
     if (sample && best <= 2) {
       var src = ctx.createBufferSource();
       src.buffer = sample.buffer;
-      src.playbackRate.value = Math.pow(2, (midi - sample.midi) / 12);
+      src.playbackRate.value = Math.pow(2, (midi - sampleMidi) / 12);
       gain.gain.setValueAtTime(level, when);
       src.connect(gain);
       src.start(when, sample.offset);

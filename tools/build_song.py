@@ -23,7 +23,7 @@ import sys
 import warnings
 import xml.etree.ElementTree as ET
 
-warnings.filterwarnings("ignore")
+warnings.filterwarnings("ignore", category=DeprecationWarning)
 import numpy as np  # noqa: E402
 from PIL import Image  # noqa: E402
 
@@ -37,7 +37,8 @@ DETECT_DPI = 200
 # ----------------------------------------------------------------- MIDI tempo
 def read_tempo_map(mid_path):
     """Return [(quarter_position, bpm)] from the tempo events of a MIDI file."""
-    d = open(mid_path, "rb").read()
+    with open(mid_path, "rb") as _f:
+        d = _f.read()
     ntracks, div = struct.unpack(">HH", d[10:14])
     p = 14
     out = []
@@ -324,7 +325,8 @@ def content_start(bw, system, b0, b1, first_in_line, key_change, key_count, time
 
 # ---------------------------------------------------------------------- main
 def main(cfg_path):
-    cfg = json.load(open(cfg_path))
+    with open(cfg_path) as _f:
+        cfg = json.load(_f)
     base = os.path.dirname(os.path.abspath(cfg_path))
     sid = cfg["id"]
     mscz = os.path.join(base, cfg["mscz"])
@@ -438,7 +440,8 @@ def main(cfg_path):
     index_path = os.path.join(HERE, "..", "site", "songs", "index.js")
     index = []
     if os.path.exists(index_path):
-        txt = open(index_path).read()
+        with open(index_path) as _f:
+            txt = _f.read()
         index = json.loads(txt[txt.index("=") + 1:].rstrip().rstrip(";"))
     index = [e for e in index if e["id"] != sid] + [{"id": sid, "title": cfg["title"], "order": cfg.get("order", 99)}]
     index.sort(key=lambda e: (e.get("order", 99), e["title"]))
@@ -450,7 +453,32 @@ def main(cfg_path):
           f"{size / 1e6:.1f} MB in site/songs/{sid} (images at {hi_dpi} dpi). Debug overlays: tools/build/{sid}/debug")
 
 
+def _test_tempo_map():
+    """Smoke-test the MIDI binary parser. Run: python3 build_song.py --test"""
+    import tempfile, os
+    # Minimal format-0 MIDI: 1 track, 480 ticks/quarter, one tempo event (120 BPM), end-of-track.
+    midi_bytes = bytes([
+        0x4D,0x54,0x68,0x64, 0x00,0x00,0x00,0x06, 0x00,0x00, 0x00,0x01, 0x01,0xE0,
+        0x4D,0x54,0x72,0x6B, 0x00,0x00,0x00,0x0B,
+        0x00,0xFF,0x51,0x03, 0x07,0xA1,0x20,
+        0x00,0xFF,0x2F,0x00,
+    ])
+    with tempfile.NamedTemporaryFile(suffix=".mid", delete=False) as f:
+        f.write(midi_bytes)
+        path = f.name
+    try:
+        result = read_tempo_map(path)
+        assert len(result) == 1, f"expected 1 tempo event, got {len(result)}"
+        assert abs(result[0][1] - 120.0) < 0.01, f"expected 120 BPM, got {result[0][1]}"
+    finally:
+        os.unlink(path)
+
+
 if __name__ == "__main__":
+    if len(sys.argv) == 2 and sys.argv[1] == "--test":
+        _test_tempo_map()
+        print("ok")
+        raise SystemExit(0)
     if len(sys.argv) != 2:
         raise SystemExit(__doc__)
     main(sys.argv[1])

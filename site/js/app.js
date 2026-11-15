@@ -136,7 +136,7 @@
         '<input type="range" min="0" max="100" step="1" id="' + id + '">' +
         '<output for="' + id + '"></output>' +
         '<button type="button" class="ms" data-k="mute" aria-pressed="false" title="Mute">M</button>' +
-        '<button type="button" class="ms" data-k="solo" aria-pressed="false" title="Solo: hear only this">S</button>';
+        (s.id !== 'click' ? '<button type="button" class="ms" data-k="solo" aria-pressed="false" title="Solo: hear only this">S</button>' : '');
       row.querySelector('.strip-name span').textContent = s.name;
       row.querySelector('[data-k=mute]').setAttribute('aria-label', 'Mute ' + s.name);
       row.querySelector('[data-k=solo]').setAttribute('aria-label', 'Solo ' + s.name);
@@ -515,7 +515,7 @@
     wireTimeline();
     var resizeTimer = 0;
     window.addEventListener('resize', function () { clearTimeout(resizeTimer); resizeTimer = setTimeout(layout, 80); });
-    window.addEventListener('load', function () { engine._decodePiano(); layout(); });
+    window.addEventListener('load', layout);
     document.addEventListener('visibilitychange', function () {
       if (!document.hidden && engine.playing && navigator.wakeLock) {
         navigator.wakeLock.request('screen').then(function (l) { wakeLock = l; }).catch(function () {});
