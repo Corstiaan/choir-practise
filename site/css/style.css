@@ -15,7 +15,7 @@
   --rule: #3a515d;
   --ink: #eef3f5;
   --soft: #a3b6c0;
-  --paper: #ffffff;
+  --paper: #f8fafb;
   --me: #ffc933;        /* highlighter colour of the singer's own part */
 }
 
@@ -76,7 +76,7 @@ button { cursor: pointer; }
   padding: 10px 18px 14px;
   background: var(--paper);
   border-radius: 3px;
-  box-shadow: 0 10px 30px rgba(6, 14, 18, 0.45);
+  box-shadow: 0 12px 40px rgba(6, 14, 18, 0.55);
 }
 .system { position: relative; margin-left: auto; cursor: pointer; }
 .system + .system { margin-top: 6px; }
@@ -201,20 +201,25 @@ input[type="range"]::-moz-range-thumb { width: 20px; height: 20px; border: 0; bo
 /* --------------------------------------------------------------- phones */
 @media (max-width: 860px) {
   .app { display: block; height: auto; }
-  .top { padding: 10px 14px 8px; }
-  .song-title, .song-select { font-size: 1.15rem; }
+  .top { padding: 12px 16px 10px; }
+  .song-title, .song-select { font-size: 1.2rem; }
   .stage { display: block; }
-  .score { height: 54vh; height: 54svh; padding: 0 8px; }
-  .sheet { padding: 6px 8px 8px; margin-bottom: 40vh; }
-  .desk { overflow: visible; padding: 14px 14px 24px; }
-  .transport { position: sticky; bottom: 0; z-index: 5; grid-template-columns: auto minmax(0, 1fr); padding: 8px 14px calc(10px + env(safe-area-inset-bottom)); }
+  .score { height: 56vh; height: 56svh; padding: 0 10px; }
+  .sheet { padding: 6px 10px 10px; margin-bottom: 40vh; }
+  .desk { overflow: visible; padding: 16px 16px 28px; }
+  .panel { padding: 14px 0 18px; }
+  .strip { padding: 5px 0; }
+  .transport { position: sticky; bottom: 0; z-index: 5; grid-template-columns: auto minmax(0, 1fr); padding: 10px 16px calc(14px + env(safe-area-inset-bottom)); gap: 8px 16px; }
+  .icon { width: 44px; height: 44px; }
+  .icon.play { width: 60px; height: 60px; }
+  .icon.play svg { width: 28px; height: 28px; }
   .timeline { grid-column: 1 / -1; }
   .readout { align-items: flex-end; white-space: nowrap; }
   .song-sub { display: none; }
   .song { flex: 1 1 100%; }
   .song-select { width: 100%; }
   .voice-pick { flex: 1 1 100%; }
-  .segmented button { padding: 5px 11px; }
+  .segmented button { padding: 6px 14px; }
 }
 @media (max-width: 860px) and (orientation: landscape) {
   .score { height: 62vh; height: 62svh; }
