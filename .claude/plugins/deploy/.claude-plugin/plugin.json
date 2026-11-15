@@ -1,0 +1,5 @@
+{
+  "name": "deploy",
+  "version": "0.1.0",
+  "description": "Adds /deploy — uploads site/ to the live server via deploy.sh"
+}
